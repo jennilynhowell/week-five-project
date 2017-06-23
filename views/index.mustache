@@ -9,13 +9,14 @@
   <body class="">
     <header class="navbar navbar-default">
       <h4 class="navbar-text">Welcome to Mystery Word</h4>
+      {{#numGuesses}}<p class="navbar-text navbar-right">Guesses remaining: {{.}}</p>{{/numGuesses}}
+      {{^numGuesses}}<p class="navbar-text navbar-right">No guesses left!</p>{{/numGuesses}}
     </header>
 
     <div class="container">
       <h1>Let's play!</h1>
       <section class="container letters">
         {{#arrayBlanks}}<h1>{{.}} </h1>{{/arrayBlanks}}
-
       </section>
 
       <section class="container guess-form">
@@ -26,7 +27,10 @@
       </section>
 
       <section class="already-guessed">
-        <h4>You've guessed: [guesses]</h4>
+        <h4>You've guessed:</h4>
+        {{#triedLetters}}
+        <span>{{.}},</span>
+        {{/triedLetters}}
       </section>
 
       </div>

@@ -37,7 +37,6 @@ let chooseWord = function(){
 };
 
 let computerWord = chooseWord();
-console.log('computerWord: ', computerWord);
 
 //set session
 app.use(session({
@@ -50,16 +49,18 @@ app.use(session({
 app.use((req, res, next) => {
   let storedWord = req.session.store;
   storedWord = computerWord;
-  console.log('storedword: ', storedWord);
   next();
 });
 
-//array holding letters/blanks
+//arrays holding letters/blanks
 let arrayBlanks = [];
+let wordArray = Array.from(computerWord);
+let triedLetters = [];
+console.log('wordArray ', wordArray);
 
 //set endpoints
 app.get('/', (req, res) => {
-  for (let i = 0; i <= computerWord.length; i++) {
+  for (let i = 0; i < computerWord.length; i++) {
     arrayBlanks[i] = '_';
   };
 
@@ -69,5 +70,32 @@ app.get('/', (req, res) => {
 
   res.render('index', context);
 });
+
+
+app.post('/', (req, res) => {
+  let counter = 0;
+  let numGuesses = 8;
+  let letterGuess = req.body.text;
+  letterGuess = letterGuess.toLowerCase();
+  triedLetters.push(letterGuess.toUpperCase());
+
+  for (let i = 0; i < wordArray.length; i++) {
+    counter ++;
+    numGuesses --;
+    if (letterGuess === wordArray[i]) {
+      arrayBlanks[counter - 1] = letterGuess;
+    }
+
+  };
+
+  context = {
+    arrayBlanks: arrayBlanks,
+    triedLetters: triedLetters,
+    numGuesses: numGuesses
+  }
+
+  res.render('index', context);
+});
+
 
 app.listen(3000);

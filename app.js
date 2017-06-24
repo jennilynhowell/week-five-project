@@ -117,31 +117,47 @@ console.log('guesses: ', numGuesses);
   //guessing form
   app.post('/play', (req, res) => {
     let counter = 0;
-    let repeatLetters = [];
+    let repeats = [];
     let letterGuess = req.body.guess;
     letterGuess = letterGuess.toLowerCase();
-    triedLetters.push(letterGuess.toUpperCase());
-
-    //is this a repeat letter?
-    for (let i = 0; i < triedLetters.length; i++) {
-      if (letterGuess === triedLetters[i]) {
-        repeatLetters.push(letterGuess.toUpperCase());
-        console.log('repeats: ', repeatLetters);
-      }
-    };
+    triedLetters.push(letterGuess);
+    console.log('tried: ', triedLetters);
 
     for (let i = 0; i < wordArray.length; i++) {
       counter ++;
-      if (letterGuess === wordArray[i]) {
+
+      //if no match, check for duplicates
+      if (letterGuess !== wordArray[i]){
+        for (let i = 0; i < triedLetters.length; i++) {
+          if (triedLetters[i] === letterGuess) {
+            repeats.push(letterGuess);
+            console.log('repeats: ', repeats);
+          } else {
+            numGuesses --;
+          }
+        };
+      } else if (letterGuess === wordArray[i]) {
         arrayBlanks[counter - 1] = letterGuess;
+        console.log(arrayBlanks);
       }
     };
+
+
+    // if (letterGuess !== wordArray[i] && triedLetters.length > 1) {
+    //   for (let i = 0; i < triedLetters.length; i++) {
+    //     if (letterGuess.toUpperCase() == triedLetters[i]) {
+    //       repeat = letterGuess;
+    //       console.log('repeat: ', repeat);
+    //     };
+    //   }
+    // }
+
 
     let context = {
       playerName: playerName,
       arrayBlanks: arrayBlanks,
       triedLetters: triedLetters,
-      repeatLetters: repeatLetters
+      // repeatLetters: repeatLetters
       // numGuesses: numGuesses
     }
 

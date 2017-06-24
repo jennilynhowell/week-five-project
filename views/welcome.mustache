@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Mystery Word</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body class="">
+    <header class="navbar navbar-default">
+      <h4 class="navbar-text">Welcome to Mystery Word</h4>
+      <h5 class="navbar-text navbar-right">Guesses remaining: {{numGuesses}}</h5>
+      {{^numGuesses}}<h5 class="navbar-text navbar-right">No guesses left!</h5>{{/numGuesses}}
+    </header>
+
+    <div class="container">
+      <h1>Let's play!</h1>
+      <h3>First things first: What's your name?</h3>
+      <form class="form-group form-inline" action="/welcome" method="post">
+        <input type="text" name="name" value="" placeholder="Your name here" class="form-control">
+        <input type="submit" name="submit" value="Let's play!" class="btn btn-info">
+      </form>
+    </div>
+  </body>
+</html>

@@ -9,19 +9,25 @@
   <body class="">
     <header class="navbar navbar-default">
       <h4 class="navbar-text">Welcome to Mystery Word</h4>
-      {{#numGuesses}}<p class="navbar-text navbar-right">Guesses remaining: {{.}}</p>{{/numGuesses}}
-      {{^numGuesses}}<p class="navbar-text navbar-right">No guesses left!</p>{{/numGuesses}}
+      {{#numGuesses}}<h5 class="navbar-text navbar-right">Guesses remaining: {{.}}</h5>{{/numGuesses}}
+      {{^numGuesses}}<h5 class="navbar-text navbar-right">No guesses left!</h5>{{/numGuesses}}
     </header>
 
     <div class="container">
-      <h1>Let's play!</h1>
+      <h1>Welcome, {{playerName}}!</h1>
       <section class="container letters">
         {{#arrayBlanks}}<h1>{{.}} </h1>{{/arrayBlanks}}
       </section>
 
+      {{#repeatLetters}}
+        <section class="container repeats">
+          <h2>Oops, you've already tried these letters: {{.}}. Keep going!</h2>
+        </section>
+      {{/repeatLetters}}
+
       <section class="container guess-form">
-        <form class="form-group form-inline" action="/" method="post">
-          <input type="text" name="text" value="" placeholder="Your guess here" class="form-control">
+        <form class="form-group form-inline" action="/play" method="post">
+          <input type="text" name="guess" value="" placeholder="Your guess here" class="form-control">
           <input type="submit" name="submit" value="Guess!" class="btn btn-info">
         </form>
       </section>

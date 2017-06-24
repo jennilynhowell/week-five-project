@@ -4,7 +4,7 @@ const path = require('path');
 const session = require('express-session');
 const bodyParser = require('body-parser');
 const fs = require('fs');
-// ??? const parseurl = require('parseurl');
+const parseurl = require('parseurl');
 
 const app = express();
 app.engine('mustache', mustacheExpress());
@@ -18,84 +18,135 @@ app.use(express.static(path.join(__dirname, 'public')));
 //computer picks a random word
 const WORDS = fs.readFileSync("/usr/share/dict/words", "utf-8").toLowerCase().split("\n");
 
-let word = '';
-
 //get a random word
+let word = '';
 let chooseWord = function(){
   let pickedWord = '';
   let randomIndex = Math.floor(Math.random() * WORDS.length);
   pickedWord = WORDS[randomIndex];
-  console.log('pickedWord: ', pickedWord);
   //check word for length
   if (pickedWord.length <= 8 && pickedWord.length >= 4){
     word = pickedWord;
-    console.log('word in func: ', word);
     return word;
   } else {
     return chooseWord();
   }
 };
 
+//variables for game play
 let computerWord = chooseWord();
-
-//set session
-app.use(session({
-  secret: 'keyboard cat',
-  resave: false,
-  saveUninitialized: true,
-}));
-
-//store computerWord in session
-app.use((req, res, next) => {
-  let storedWord = req.session.store;
-  storedWord = computerWord;
-  next();
-});
-
-//arrays holding letters/blanks
+let playerName = '';
 let arrayBlanks = [];
 let wordArray = Array.from(computerWord);
-let triedLetters = [];
 console.log('wordArray ', wordArray);
+let triedLetters = [];
+let numGuesses = 8;
+console.log('guesses: ', numGuesses);
+
+//middleware
+  //set session
+  app.use(session({
+    secret: 'keyboard cat',
+    resave: false,
+    saveUninitialized: true,
+  }));
+
+  //store computerWord in session
+  app.use((req, res, next) => {
+    let storedWord = req.session.store;
+    storedWord = computerWord;
+    next();
+  });
+
+  //store guesses in session
+  app.use((req, res, next) => {
+    let storedGuesses = req.session.store;
+    storedGuesses = numGuesses;
+    next();
+  });
+
+  //require playerName
+  app.use((req, res, next) => {
+    let pathname = parseurl(req).pathname;
+    if (!req.session.user && pathname != '/welcome'){
+      res.redirect('/welcome');
+    } else {
+      next();
+    }
+  })
 
 //set endpoints
-app.get('/', (req, res) => {
-  for (let i = 0; i < computerWord.length; i++) {
-    arrayBlanks[i] = '_';
-  };
+  app.get('/', (req, res) => {
+    res.redirect('/welcome');
+  });
 
-  context = {
-    arrayBlanks: arrayBlanks
-  };
+  app.get('/welcome', (req, res) => {
+    res.render('welcome', {});
+  });
 
-  res.render('index', context);
-});
+  app.get('/play', (req, res) => {
+    for (let i = 0; i < computerWord.length; i++) {
+      arrayBlanks[i] = '_';
+    };
 
+    let context = {
+      numGuesses: numGuesses,
+      playerName: playerName,
+      arrayBlanks: arrayBlanks
+    };
 
-app.post('/', (req, res) => {
-  let counter = 0;
-  let numGuesses = 8;
-  let letterGuess = req.body.text;
-  letterGuess = letterGuess.toLowerCase();
-  triedLetters.push(letterGuess.toUpperCase());
+    res.render('play', context);
+  });
 
-  for (let i = 0; i < wordArray.length; i++) {
-    counter ++;
-    numGuesses --;
-    if (letterGuess === wordArray[i]) {
-      arrayBlanks[counter - 1] = letterGuess;
+  //welcome form
+  app.post('/welcome', (req, res) => {
+    //capture player name
+    playerName = req.body.name;
+    if (playerName) {
+      req.session.user = playerName;
+    };
+
+    if(req.session.user){
+      res.redirect('/play');
+    } else {
+      res.redirect('/welcome');
     }
 
-  };
+  });
 
-  context = {
-    arrayBlanks: arrayBlanks,
-    triedLetters: triedLetters,
-    numGuesses: numGuesses
-  }
+  //guessing form
+  app.post('/play', (req, res) => {
+    let counter = 0;
+    let repeatLetters = [];
+    let letterGuess = req.body.guess;
+    letterGuess = letterGuess.toLowerCase();
+    triedLetters.push(letterGuess.toUpperCase());
 
-  res.render('index', context);
-});
+    //is this a repeat letter?
+    for (let i = 0; i < triedLetters.length; i++) {
+      if (letterGuess === triedLetters[i]) {
+        repeatLetters.push(letterGuess.toUpperCase());
+        console.log('repeats: ', repeatLetters);
+      }
+    };
+
+    for (let i = 0; i < wordArray.length; i++) {
+      counter ++;
+      if (letterGuess === wordArray[i]) {
+        arrayBlanks[counter - 1] = letterGuess;
+      }
+    };
+
+    let context = {
+      playerName: playerName,
+      arrayBlanks: arrayBlanks,
+      triedLetters: triedLetters,
+      repeatLetters: repeatLetters
+      // numGuesses: numGuesses
+    }
+
+    res.render('play', context);
+  });
 
 
 app.listen(3000);

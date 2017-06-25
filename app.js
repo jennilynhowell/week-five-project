@@ -118,47 +118,55 @@ console.log('guesses: ', numGuesses);
   app.post('/play', (req, res) => {
     let counter = 0;
     let repeats = [];
+    let gameEnd = false;
     let letterGuess = req.body.guess;
     letterGuess = letterGuess.toLowerCase();
-    triedLetters.push(letterGuess);
-    console.log('tried: ', triedLetters);
 
-    for (let i = 0; i < wordArray.length; i++) {
-      counter ++;
-
-      //if no match, check for duplicates
-      if (letterGuess !== wordArray[i]){
-        for (let i = 0; i < triedLetters.length; i++) {
-          if (triedLetters[i] === letterGuess) {
-            repeats.push(letterGuess);
-            console.log('repeats: ', repeats);
-          } else {
-            numGuesses --;
+    //check for duplicate guess
+    function playGame(letter) {
+      let duplicate = false;
+      let correct = false;
+      if (triedLetters){
+        for (let i = 0; i <= triedLetters.length; i++) {
+          if (letter === triedLetters[i]) {
+            repeats.push(letter);
+            duplicate = true;
+            return true;
           }
         };
-      } else if (letterGuess === wordArray[i]) {
-        arrayBlanks[counter - 1] = letterGuess;
-        console.log(arrayBlanks);
       }
-    };
+      //if not duplicate and is a match, display in blank
+      triedLetters.push(letterGuess);
+      for (let i = 0; i < wordArray.length; i++) {
+        counter ++;
+        if (letterGuess === wordArray[i]) {
+          arrayBlanks[counter - 1] = letterGuess;
+          correct = true;
+        }
+      }
+      //if incorrect guess, subtract allowed guesses
+      if (!duplicate && !correct && numGuesses >= 1){
+        numGuesses --;
+        console.log(numGuesses);
+      } else if (correct && numGuesses != 0) {
+        numGuesses;
+      } else if (numGuesses = 0) {
+        gameEnd = true;
+        console.log(gameEnd);
+      }
 
+    }
 
-    // if (letterGuess !== wordArray[i] && triedLetters.length > 1) {
-    //   for (let i = 0; i < triedLetters.length; i++) {
-    //     if (letterGuess.toUpperCase() == triedLetters[i]) {
-    //       repeat = letterGuess;
-    //       console.log('repeat: ', repeat);
-    //     };
-    //   }
-    // }
+    playGame(letterGuess);
 
 
     let context = {
       playerName: playerName,
       arrayBlanks: arrayBlanks,
       triedLetters: triedLetters,
-      // repeatLetters: repeatLetters
-      // numGuesses: numGuesses
+      repeats: repeats,
+      numGuesses: numGuesses,
+      gameEnd: gameEnd
     }
 
     res.render('play', context);

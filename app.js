@@ -118,7 +118,6 @@ console.log('guesses: ', numGuesses);
   app.post('/play', (req, res) => {
     let counter = 0;
     let repeats = [];
-    let gameEnd = false;
     let letterGuess = req.body.guess;
     letterGuess = letterGuess.toLowerCase();
 
@@ -147,14 +146,10 @@ console.log('guesses: ', numGuesses);
       //if incorrect guess, subtract allowed guesses
       if (!duplicate && !correct && numGuesses >= 1){
         numGuesses --;
-        console.log(numGuesses);
       } else if (correct && numGuesses != 0) {
         numGuesses;
-      } else if (numGuesses = 0) {
-        gameEnd = true;
-        console.log(gameEnd);
       }
-
+      //if numGuesses = 0, end the game... ??
     }
 
     playGame(letterGuess);

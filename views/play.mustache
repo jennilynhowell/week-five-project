@@ -28,6 +28,10 @@
       {{#winRound}}
         <section class="container repeats">
           <h5 class="alert alert-success"><b>Hooray! </b>You guessed the word. Play again?</h5>
+          <form class="form-group form-inline win-form" action="/reset" method="get">
+            <input type="hidden" name="play" value="play">
+            <input type="submit" name="playAgain" value="Yes!" class="btn btn-success">
+          </form>
         </section>
       {{/winRound}}
 

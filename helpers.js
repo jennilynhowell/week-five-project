@@ -79,6 +79,16 @@ module.exports = {
 
     },
 
+    reset: function(){
+      this.arrayBlanks = [];
+      this.triedLetters = [];
+      this.repeats = [];
+      this.numGuesses = 8;
+      this.wordArray = [];
+      this.computerWord = '';
+      this.winRound = false;
+    }
+
 
   //end game object
   },

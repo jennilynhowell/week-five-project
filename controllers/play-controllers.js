@@ -9,7 +9,6 @@ module.exports = {
     req.session.word = newWord;
     req.session.guesses = guesses;
 
-
     if(req.session.word && req.session.guesses) {
       game.gameDisplay(newWord);
       console.log(req.session.word);
@@ -21,27 +20,28 @@ module.exports = {
     };
 
     let context = {
-      gameOver: game.gameOver,
+      triedLetters: game.triedLetters,
       arrayBlanks: game.arrayBlanks,
       wordArray: game.wordArray,
       numGuesses: game.numGuesses,
-      playerName: game.playerName,
-      arrayBlanks: game.arrayBlanks
-    };
+      playerName: game.playerName
+    }
 
     res.render('play', context);
   },
 
   play: function(req, res){
-    let emptyBlanks = true;
+    let playAgain = req.body.play;
+
     let letterGuess = req.body.guess;
     letterGuess = letterGuess.toLowerCase();
 
     game.checkGuess(letterGuess);
 
-    //check arrayBlanks and numGuesses to gauge win
-    if (game.arrayBlanks.includes('_')){
-      emptyBlanks = true;
+    if (game.arrayBlanks.includes('_')) {
+      game.winRound = false;
+      console.log(game.winRound);
+
     } else {
       emptyBlanks = false;
     }
@@ -59,10 +59,17 @@ module.exports = {
       arrayBlanks: game.arrayBlanks,
       wordArray: game.wordArray,
       numGuesses: game.numGuesses,
-      playerName: game.playerName,
-      arrayBlanks: game.arrayBlanks
+      playerName: game.playerName
     }
 
-    res.render('play', context);
+      res.render('play', context);
+
+  },
+
+  resetGame: function(req, res){
+    game.reset();
+    console.log('Made it to resetGame fn');
+    res.redirect('/play');
   }
+
 };

@@ -19,3 +19,37 @@ header {
 .guess-form {
   text-align: center;
 }
+
+.repeats {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  flex-direction: row;
+  flex-wrap: nowrap;
+}
+
+.repeats h5 {
+  flex: 1 1 40%;
+}
+
+.repeats form {
+  flex: 1 1 40%;
+  margin-left: 5%;
+}
+
+.replay-form {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  flex-direction: row;
+  flex-wrap: nowrap;
+}
+
+.replay-form h5 {
+  flex: 1 1 40%;
+}
+
+.replay-form form {
+  flex: 1 1 40%;
+  margin-left: 5%;
+}

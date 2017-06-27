@@ -77,14 +77,15 @@ module.exports = {
 
     },
 
-    //check status of the game
-    // winRound: function(array) {
-    //   if (array.includes('_')) {
-    //     return false;
-    //   } else {
-    //     return true;
-    //   };
-    // }
+    reset: function(){
+      this.arrayBlanks = [];
+      this.triedLetters = [];
+      this.repeats = [];
+      this.numGuesses = 8;
+      this.wordArray = [];
+      this.computerWord = '';
+      this.winRound = false;
+    }
 
   //end game object
   },

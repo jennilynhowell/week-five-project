@@ -20,8 +20,6 @@ module.exports = {
 
     winRound: false,
 
-    gameOver: false,
-
     chooseWord: function() {
       let pickedWord = '';
       let randomIndex = Math.floor(Math.random() * this.WORDS.length);
@@ -88,7 +86,6 @@ module.exports = {
       this.computerWord = '';
       this.winRound = false;
     }
-
 
   //end game object
   },

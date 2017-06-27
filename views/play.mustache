@@ -31,23 +31,23 @@
         </section>
       {{/winRound}}
 
-      {{#gameEnd}}
+      {{#gameOver}}
         <section class="container replay-form">
           <h5 class="alert alert-warning"><b>Oh no! </b>You're out of guesses. Play again?</h5>
           <form class="form-group form-inline" action="/play" method="post">
             <input type="submit" name="replay-submit" value="Yes!" class="btn btn-info">
           </form>
         </section>
-      {{/gameEnd}}
+      {{/gameOver}}
 
-      {{^gameEnd}}
+      {{^gameOver}}
         <section class="container guess-form">
           <form class="form-group form-inline" action="/play" method="post">
             <input type="text" name="guess" value="" placeholder="Your guess here" class="form-control">
             <input type="submit" name="submit" value="Guess!" class="btn btn-info">
           </form>
         </section>
-      {{/gameEnd}}
+      {{/gameOver}}
 
       <section class="already-guessed">
         <h4>You've guessed:</h4>

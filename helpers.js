@@ -20,6 +20,8 @@ module.exports = {
 
     winRound: false,
 
+    gameOver: false,
+
     chooseWord: function() {
       let pickedWord = '';
       let randomIndex = Math.floor(Math.random() * this.WORDS.length);
@@ -77,14 +79,6 @@ module.exports = {
 
     },
 
-    //check status of the game
-    // winRound: function(array) {
-    //   if (array.includes('_')) {
-    //     return false;
-    //   } else {
-    //     return true;
-    //   };
-    // }
 
   //end game object
   },

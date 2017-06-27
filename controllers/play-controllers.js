@@ -13,7 +13,7 @@ module.exports = {
       game.gameDisplay(newWord);
       console.log(req.session.word);
     } else if (!req.session.guesses) {
-      game.gameOver = true;
+      display = 'No guesses left!';``
     } else {
       newWord = game.chooseWord();
       display = game.gameDisplay(newWord);
@@ -37,19 +37,12 @@ module.exports = {
     letterGuess = letterGuess.toLowerCase();
 
     game.checkGuess(letterGuess);
-
     if (game.arrayBlanks.includes('_')) {
       game.winRound = false;
       console.log(game.winRound);
-
     } else {
-      emptyBlanks = false;
-    }
-
-    if (emptyBlanks && game.numGuesses >= 1) {
-      game.winRound = false;
-    } else if (!emptyBlanks && game.numGuesses >= 1) {
       game.winRound = true;
+      console.log(game.winRound);
     }
 
     let context = {

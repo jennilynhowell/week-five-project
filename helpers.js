@@ -18,7 +18,7 @@ module.exports = {
 
     computerWord: '',
 
-    // winRound: false,
+    winRound: false,
 
     chooseWord: function() {
       let pickedWord = '';
@@ -78,13 +78,13 @@ module.exports = {
     },
 
     //check status of the game
-    winRound: function(array) {
-      if (array.includes('_')) {
-        return false;
-      } else {
-        return true;
-      };
-    }
+    // winRound: function(array) {
+    //   if (array.includes('_')) {
+    //     return false;
+    //   } else {
+    //     return true;
+    //   };
+    // }
 
   //end game object
   },

@@ -1,8 +1,6 @@
 const fs = require('fs');
 
 module.exports = {
-  //==============================GAME
-  //=========GAME PIECES
   game: {
     WORDS: fs.readFileSync("/usr/share/dict/words", "utf-8").toLowerCase().split("\n"),
 
@@ -19,6 +17,8 @@ module.exports = {
     wordArray: [],
 
     computerWord: '',
+
+    // winRound: false,
 
     chooseWord: function() {
       let pickedWord = '';
@@ -41,7 +41,6 @@ module.exports = {
       return this.arrayBlanks;
     },
 
-    //=========GAME PLAY
     //check for duplicate guess
     checkGuess: function(letter){
       let counter = 0;
@@ -75,6 +74,20 @@ module.exports = {
       } else if (correct && this.numGuesses != 0) {
         this.numGuesses;
       }
+
+    },
+
+    //check status of the game
+    winRound: function(array) {
+      if (array.includes('_')) {
+        return false;
+      } else {
+        return true;
+      };
     }
+
+  //end game object
   },
-}
+
+
+};

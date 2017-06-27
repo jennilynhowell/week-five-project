@@ -3,19 +3,19 @@ const game = require('../helpers').game;
 module.exports = {
   display: function (req, res){
     let guesses = game.numGuesses;
+    let blanks = game.arrayBlanks;
     let newWord = game.chooseWord();
     let display = game.gameDisplay(newWord);
     req.session.word = newWord;
     req.session.guesses = guesses;
 
+
     if(req.session.word && req.session.guesses) {
       game.gameDisplay(newWord);
       console.log(newWord);
-      console.log('array blanks: ', game.arrayBlanks);
     } else {
       newWord = game.chooseWord();
       display = game.gameDisplay(newWord);
-      console.log('none, choosing: ', newWord);
     };
 
     let context = {
@@ -30,12 +30,19 @@ module.exports = {
   },
 
   play: function(req, res){
+    let winRound = game.winRound(game.arrayBlanks);
+    console.log('winRound: ', winRound);
+
     let letterGuess = req.body.guess;
     letterGuess = letterGuess.toLowerCase();
 
-    game.checkGuess(letterGuess);
+    //when wrapped in loop checkGuess does not work.
+    while (winRound = false) {
+      game.checkGuess(letterGuess);
+    } winRound = true;
 
     let context = {
+      winRound: winRound,
       triedLetters: game.triedLetters,
       repeats: game.repeats,
       arrayBlanks: game.arrayBlanks,

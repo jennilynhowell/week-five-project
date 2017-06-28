@@ -20,36 +20,14 @@ header {
   text-align: center;
 }
 
-.repeats {
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  flex-direction: row;
-  flex-wrap: nowrap;
+.repeats, .win-form, .replay-form {
+  text-align: center;
 }
 
-.repeats h5 {
-  flex: 1 1 40%;
+input[type="submit"] {
+  width: 15%;
 }
 
-.repeats form {
-  flex: 1 1 40%;
-  margin-left: 5%;
-}
-
-.replay-form {
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  flex-direction: row;
-  flex-wrap: nowrap;
-}
-
-.replay-form h5 {
-  flex: 1 1 40%;
-}
-
-.replay-form form {
-  flex: 1 1 40%;
-  margin-left: 5%;
+input[value="Guess!"] {
+  width: auto;
 }

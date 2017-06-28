@@ -32,27 +32,42 @@ module.exports = {
 
   play: function(req, res){
     let playAgain = req.body.play;
-
     let letterGuess = req.body.guess;
-    letterGuess = letterGuess.toLowerCase();
-
-    game.checkGuess(letterGuess);
-    if (game.arrayBlanks.includes('_')) {
-      game.winRound = false;
-      console.log(game.winRound);
+    //regex letter test from https://stackoverflow.com/questions/23476532/check-if-string-contains-only-letters-in-javascript
+    if (/[^a-z]/i.test(letterGuess)) {
+      console.log('insert letter');
+      game.errorMsg = true;
     } else {
-      game.winRound = true;
-      console.log(game.winRound);
+      game.errorMsg = false;
     }
 
+    letterGuess = letterGuess.toLowerCase();
+
+    if (game.numGuesses > 1) {
+      game.gameOver = false;
+      game.checkGuess(letterGuess);
+      if (game.arrayBlanks.includes('_')) {
+        game.winRound = false;
+      } else {
+        game.winRound = true;
+      }
+    } else {
+      game.numGuesses = 0;
+      game.gameOver = true;
+      game.arrayBlanks = game.wordArray;
+    };
+
+
     let context = {
+      errorMsg: game.errorMsg,
       winRound: game.winRound,
       triedLetters: game.triedLetters,
       repeats: game.repeats,
       arrayBlanks: game.arrayBlanks,
       wordArray: game.wordArray,
       numGuesses: game.numGuesses,
-      playerName: game.playerName
+      playerName: game.playerName,
+      gameOver: game.gameOver
     }
 
       res.render('play', context);
@@ -61,7 +76,6 @@ module.exports = {
 
   resetGame: function(req, res){
     game.reset();
-    console.log('Made it to resetGame fn');
     res.redirect('/play');
   }
 

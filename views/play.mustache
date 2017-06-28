@@ -25,8 +25,14 @@
         </section>
       {{/repeats}}
 
-      {{#winRound}}
+      {{#errorMsg}}
         <section class="container repeats">
+          <h5 class="alert alert-danger"><b>Oh no! </b>Please enter a letter.</h5>
+        </section>
+      {{/errorMsg}}
+
+      {{#winRound}}
+        <section class="container win-form">
           <h5 class="alert alert-success"><b>Hooray! </b>You guessed the word. Play again?</h5>
           <form class="form-group form-inline win-form" action="/reset" method="get">
             <input type="hidden" name="play" value="play">
@@ -38,8 +44,9 @@
       {{#gameOver}}
         <section class="container replay-form">
           <h5 class="alert alert-warning"><b>Oh no! </b>You're out of guesses. Play again?</h5>
-          <form class="form-group form-inline" action="/play" method="post">
-            <input type="submit" name="replay-submit" value="Yes!" class="btn btn-info">
+          <form class="form-group form-inline win-form" action="/reset" method="get">
+            <input type="hidden" name="play" value="play">
+            <input type="submit" name="playAgain" value="Yes!" class="btn btn-warning">
           </form>
         </section>
       {{/gameOver}}

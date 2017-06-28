@@ -20,6 +20,10 @@ module.exports = {
 
     winRound: false,
 
+    gameOver: false,
+
+    errorMsg: false,
+
     chooseWord: function() {
       let pickedWord = '';
       let randomIndex = Math.floor(Math.random() * this.WORDS.length);
@@ -58,8 +62,10 @@ module.exports = {
         this.repeats = [];
       }
 
+
       //if !duplicate and is match, display letter
-      this.triedLetters.push(letter)
+      this.triedLetters.push(letter);
+
       for (let i = 0; i < this.wordArray.length; i++) {
         counter ++;
         if(letter === this.wordArray[i]) {

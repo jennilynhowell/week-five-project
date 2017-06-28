@@ -78,7 +78,7 @@ module.exports = {
       if (!duplicate && !correct && this.numGuesses >= 1) {
         this.numGuesses --;
       } else if (correct && this.numGuesses != 0) {
-        this.numGuesses;
+        // this.numGuesses;
       }
 
     },

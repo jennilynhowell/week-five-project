@@ -68,19 +68,15 @@ module.exports = {
       }
     },
 
-    // chooseWord: function() {
-    //   let pickedWord = '';
-    //   let randomIndex = Math.floor(Math.random() * this.WORDS.length);
-    //   pickedWord = this.WORDS[randomIndex];
-    //   //check word for length
-    //   if (pickedWord.length <= 8 && pickedWord.length >= 4){
-    //     this.computerWord = pickedWord;
-    //     this.wordArray = Array.from(this.computerWord);
-    //     return this.computerWord;
-    //   } else {
-    //     return this.chooseWord();
-    //   }
-    // },
+    executeLevel: function(choice){
+      if (choice == 3) {
+        return this.chooseHard();
+      } else if (choice == 1) {
+        return this.chooseEasy();
+      } else {
+        return this.chooseNormal();
+      }
+    },
 
     gameDisplay: function(word){
       for (let i = 0; i < this.wordArray.length; i++){

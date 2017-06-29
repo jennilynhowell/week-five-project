@@ -4,27 +4,12 @@ module.exports = {
 
   display: function (req, res){
     let levelChoice = game.levelChoice;
+    let newWord = game.executeLevel(game.levelChoice);
     let guesses = game.numGuesses;
     let blanks = game.arrayBlanks;
-    let newWord = '';
     let display = '';
     req.session.guesses = guesses;
-    console.log('sess.level at top: ', req.session.level);
 
-    if (req.session.level = 3){
-      console.log('pick hard');
-      newWord = game.chooseHard();
-    } else if (req.session.level = 1) {
-      console.log('pick easy');
-      newWord = game.chooseEasy();
-    } else {
-      console.log('fall through');
-      newWord = game.chooseNormal();
-    }
-
-    console.log('newWord: ', newWord);
-    console.log('session level: ', req.session.level);
-    console.log('level: ', game.levelChoice);
     display = game.gameDisplay(newWord);
     req.session.word = newWord;
 
@@ -34,7 +19,7 @@ module.exports = {
     } else if (!req.session.guesses) {
       display = 'No guesses left!';``
     } else {
-      newWord = game.chooseWord();
+      newWord = game.executeLevel();
       display = game.gameDisplay(newWord);
     };
 
@@ -96,6 +81,19 @@ module.exports = {
   resetGame: function(req, res){
     game.reset();
     res.redirect('/play');
+  },
+
+  newWordReq: function(req, res) {
+    game.arrayBlanks = [];
+    game.triedLetters = [];
+    let newWord = game.executeLevel(game.levelChoice);
+    let display = game.gameDisplay(newWord);
+    req.session.word = newWord;
+    res.redirect('/play');
+  },
+
+  winners: function(req, res) {
+    res.render('winners', {});
   }
 
 };

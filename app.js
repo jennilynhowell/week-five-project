@@ -50,5 +50,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 
   app.post('/play', playController.play);
 
+  app.post('/newWord', playController.newWordReq);
+
+  app.post('/winners', playController.winners)
+
 
 app.listen(3000);

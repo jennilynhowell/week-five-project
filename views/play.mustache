@@ -39,6 +39,13 @@
             <input type="submit" name="playAgain" value="Yes!" class="btn btn-success">
           </form>
         </section>
+        <section class="container win-form">
+          <h5 class="alert alert-success"><b>Or...  </b>Register your win on our Winners Page</h5>
+          <form class="form-group form-inline win-reg" action="/winners" method="post">
+            <input type="hidden" name="register" value="register">
+            <input type="submit" name="register" value="Sure!" class="btn btn-success">
+          </form>
+        </section>
       {{/winRound}}
 
       {{#gameOver}}

@@ -31,3 +31,25 @@ input[type="submit"] {
 input[value="Guess!"] {
   width: auto;
 }
+
+.winners-box {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.winners-list {
+  margin: 2%;
+  padding: 2%;
+  flex: 0 1 25%;
+  text-align: center;
+  border: 1px solid #CCCCCC;
+  background-color: #F7F7F9;
+  box-shadow: 2px 2px 10px;
+}
+
+.win-page-form {
+  flex: 1 1 100%;
+}

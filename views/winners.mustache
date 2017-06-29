@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Mystery Word Winners!</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body class="container bg-info">
+    <h1>Way to go, Winners!</h1>
+    <section class="container winners-box">
+      {{#winners}}
+      <ul class="list-unstyled winners-list">
+        <li><h4>{{name}}</h4></li>
+        <li>Winning word: {{winning_word}}</li>
+        <li>{{date}}</li>
+      </ul>
+      {{/winners}}
+
+      <form class="form-group win-form win-page-form" action="/reset" method="get">
+        <input type="hidden" name="play" value="play">
+        <input type="submit" name="playAgain" value="Play Again" class="btn btn-info">
+      </form>
+    </section>
+
+  </body>
+</html>

@@ -1,4 +1,5 @@
 const game = require('../helpers').game;
+const models = require('../models');
 
 module.exports = {
 
@@ -74,7 +75,7 @@ module.exports = {
       gameOver: game.gameOver
     }
 
-      res.render('play', context);
+    res.render('play', context);
 
   },
 
@@ -86,6 +87,7 @@ module.exports = {
   newWordReq: function(req, res) {
     game.arrayBlanks = [];
     game.triedLetters = [];
+    game.computerWord = '';
     let newWord = game.executeLevel(game.levelChoice);
     let display = game.gameDisplay(newWord);
     req.session.word = newWord;
@@ -93,7 +95,26 @@ module.exports = {
   },
 
   winners: function(req, res) {
-    res.render('winners', {});
+    let register = req.body.register;
+
+    models.Winner.create(
+    {
+      name: game.playerName,
+      winning_word: game.computerWord,
+      date: new Date()
+    }
+    ).then(function(){
+      models.Winner.findAll({order: [['createdAt', 'DESC']]}).then(function(winners){
+      res.render('winners', {winners:winners})
+    })
+    })
+  },
+
+  winnersRenderOnly: function(req, res){
+    models.Winner.findAll({order: [['createdAt', 'DESC']]}).then(function(winners){
+    res.render('winners', {winners:winners})
+    })
   }
 
+//end controller
 };

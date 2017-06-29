@@ -9,15 +9,23 @@
   <body class="">
     <header class="navbar navbar-default">
       <h4 class="navbar-text">Welcome to Mystery Word</h4>
+      {{#numGuesses}}
       <h5 class="navbar-text navbar-right">Guesses remaining: {{numGuesses}}</h5>
+      {{/numGuesses}}
       {{^numGuesses}}<h5 class="navbar-text navbar-right">No guesses left!</h5>{{/numGuesses}}
     </header>
 
     <div class="container">
       <h1>Let's play!</h1>
-      <h3>First things first: What's your name?</h3>
+      <h3>First things first: </h3>
       <form class="form-group form-inline" action="/welcome" method="post">
-        <input type="text" name="name" value="" placeholder="Your name here" class="form-control">
+        <input type="text" name="name" value="" placeholder="What's your name?" class="form-control">
+        <select class="form-control" name="level">
+          <option value="0">Choose a Level</option>
+          <option value="1">Easy (4-6 letters)</option>
+          <option value="2">Normal (6-8 letters)</option>
+          <option value="3">Challenge (8-16 letters)</option>
+        </select>
         <input type="submit" name="submit" value="Let's play!" class="btn btn-info">
       </form>
     </div>

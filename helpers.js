@@ -24,19 +24,63 @@ module.exports = {
 
     errorMsg: false,
 
-    chooseWord: function() {
+    levelChoice: 0,
+
+    chooseEasy: function(){
       let pickedWord = '';
       let randomIndex = Math.floor(Math.random() * this.WORDS.length);
       pickedWord = this.WORDS[randomIndex];
       //check word for length
-      if (pickedWord.length <= 8 && pickedWord.length >= 4){
+      if (pickedWord.length <= 6 && pickedWord.length >= 4){
         this.computerWord = pickedWord;
         this.wordArray = Array.from(this.computerWord);
         return this.computerWord;
       } else {
-        return this.chooseWord();
+        return this.chooseEasy();
       }
     },
+
+    chooseNormal: function(){
+      let pickedWord = '';
+      let randomIndex = Math.floor(Math.random() * this.WORDS.length);
+      pickedWord = this.WORDS[randomIndex];
+      //check word for length
+      if (pickedWord.length <= 8 && pickedWord.length >= 6){
+        this.computerWord = pickedWord;
+        this.wordArray = Array.from(this.computerWord);
+        return this.computerWord;
+      } else {
+        return this.chooseNormal();
+      }
+    },
+
+    chooseHard: function(){
+      let pickedWord = '';
+      let randomIndex = Math.floor(Math.random() * this.WORDS.length);
+      pickedWord = this.WORDS[randomIndex];
+      //check word for length
+      if (pickedWord.length <= 16 && pickedWord.length >= 8){
+        this.computerWord = pickedWord;
+        this.wordArray = Array.from(this.computerWord);
+        return this.computerWord;
+      } else {
+        return this.chooseHard();
+      }
+    },
+
+    // chooseWord: function() {
+    //   let pickedWord = '';
+    //   let randomIndex = Math.floor(Math.random() * this.WORDS.length);
+    //   pickedWord = this.WORDS[randomIndex];
+    //   //check word for length
+    //   if (pickedWord.length <= 8 && pickedWord.length >= 4){
+    //     this.computerWord = pickedWord;
+    //     this.wordArray = Array.from(this.computerWord);
+    //     return this.computerWord;
+    //   } else {
+    //     return this.chooseWord();
+    //   }
+    // },
 
     gameDisplay: function(word){
       for (let i = 0; i < this.wordArray.length; i++){

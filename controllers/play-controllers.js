@@ -1,13 +1,32 @@
 const game = require('../helpers').game;
 
 module.exports = {
+
   display: function (req, res){
+    let levelChoice = game.levelChoice;
     let guesses = game.numGuesses;
     let blanks = game.arrayBlanks;
-    let newWord = game.chooseWord();
-    let display = game.gameDisplay(newWord);
-    req.session.word = newWord;
+    let newWord = '';
+    let display = '';
     req.session.guesses = guesses;
+    console.log('sess.level at top: ', req.session.level);
+
+    if (req.session.level = 3){
+      console.log('pick hard');
+      newWord = game.chooseHard();
+    } else if (req.session.level = 1) {
+      console.log('pick easy');
+      newWord = game.chooseEasy();
+    } else {
+      console.log('fall through');
+      newWord = game.chooseNormal();
+    }
+
+    console.log('newWord: ', newWord);
+    console.log('session level: ', req.session.level);
+    console.log('level: ', game.levelChoice);
+    display = game.gameDisplay(newWord);
+    req.session.word = newWord;
 
     if(req.session.word && req.session.guesses) {
       game.gameDisplay(newWord);

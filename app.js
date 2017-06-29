@@ -44,13 +44,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 
   app.get('/play', playController.display);
 
-  //welcome form
+  app.get('/reset', playController.resetGame);
+
   app.post('/welcome', welcomeController.submitName);
 
   app.post('/play', playController.play);
-
-  app.get('/reset', playController.resetGame);
-
 
 
 app.listen(3000);

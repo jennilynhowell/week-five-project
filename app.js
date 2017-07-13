@@ -26,14 +26,14 @@ app.use(express.static(path.join(__dirname, 'public')));
   }));
 
   //require playerName
-  // app.use((req, res, next) => {
-  //   let pathname = parseurl(req).pathname;
-  //   if (!req.session.user && pathname != '/welcome'){
-  //     res.redirect('/welcome');
-  //   } else {
-  //     next();
-  //   }
-  // })
+  app.use((req, res, next) => {
+    let pathname = parseurl(req).pathname;
+    if (!req.session.user && pathname != '/welcome'){
+      res.redirect('/welcome');
+    } else {
+      next();
+    }
+  })
 
 //set endpoints
   app.get('/', (req, res) => {

@@ -1,4 +1,6 @@
 # week-five-project
+Completed June 2017
+
 TIY Week 5 Project: Hangman-style word game using Node
 You will implement the game Mystery Word as a web application. In your game, you will be playing against the computer.
 
